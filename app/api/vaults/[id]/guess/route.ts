@@ -69,10 +69,10 @@ const shapeVault = (vault: any) => {
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
-    const resolvedParams = await Promise.resolve(params);
+    const resolvedParams = await context.params;
     const vaultId = resolvedParams.id;
 
     if (!ObjectId.isValid(vaultId)) {
