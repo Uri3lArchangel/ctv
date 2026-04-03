@@ -794,7 +794,7 @@ export default function Home() {
                   Hottest Vault
                 </p>
                 <div className="mt-4 flex items-center justify-between gap-3">
-                  <p className="text-lg font-semibold text-white">
+                  <p className="min-w-0 flex-1 truncate text-lg font-semibold text-white">
                     {hottestVault ? hottestVault.name : "No active vaults"}
                   </p>
                   <span className="whitespace-nowrap rounded-full border border-red-400/30 bg-red-500/10 px-3 py-1 text-xs text-red-100">
@@ -816,7 +816,7 @@ export default function Home() {
                   Closing Soon
                 </p>
                 <div className="mt-4 flex items-center justify-between gap-3">
-                  <p className="text-lg font-semibold text-white">
+                  <p className="min-w-0 flex-1 truncate text-lg font-semibold text-white">
                     {closingSoon ? closingSoon.name : "No active vaults"}
                   </p>
                   <span className="whitespace-nowrap text-sm text-white/70">
@@ -835,7 +835,7 @@ export default function Home() {
                   Highest Reward
                 </p>
                 <div className="mt-4 flex items-center justify-between gap-3">
-                  <p className="text-lg font-semibold text-white">
+                  <p className="min-w-0 flex-1 truncate text-lg font-semibold text-white">
                     {highestReward ? highestReward.name : "No active vaults"}
                   </p>
                   <span className="whitespace-nowrap text-sm text-white/70">
@@ -858,9 +858,11 @@ export default function Home() {
                     recentCracked.map((item) => (
                     <div
                       key={item.name}
-                      className="flex items-center justify-between"
+                      className="flex items-center justify-between gap-3"
                     >
-                      <span>{item.name}</span>
+                      <span className="min-w-0 flex-1 truncate">
+                        {item.name}
+                      </span>
                       <span className="whitespace-nowrap text-white/50">
                         {item.reward} · {item.time}
                       </span>
