@@ -230,7 +230,14 @@ export default function Home() {
       showNotice("Wallet connected.");
       return address;
     } catch (error) {
-      showNotice("Wallet connection cancelled.");
+      const code = (error as { code?: number })?.code;
+      if (code === -32002) {
+        showNotice("Wallet request already pending. Open your wallet to continue.");
+      } else {
+        showNotice("Wallet connection cancelled.");
+      }
+      setWalletAddress(null);
+      setIsWalletVerified(false);
       return null;
     }
   };
@@ -397,10 +404,14 @@ export default function Home() {
 
   const handleCreateVault = async () => {
     if (isDemo) {
+      const ensuredAddress = walletAddress ?? (await connectWallet());
+      if (!ensuredAddress || !isWalletVerified) {
+        showNotice("Connect your wallet to continue.");
+        return;
+      }
       const ok = await requestSignature("Create Vault");
       if (!ok) return;
-      const address = walletAddress ?? (await connectWallet());
-      if (!address) return;
+      const address = ensuredAddress;
       try {
           const totalSeconds =
             (Number.parseInt(lockDays, 10) || 0) * 24 * 60 * 60 +
@@ -478,6 +489,15 @@ export default function Home() {
       return;
     }
     if (isDemo) {
+      const ensuredAddress = walletAddress ?? (await connectWallet());
+      if (!ensuredAddress || !isWalletVerified) {
+        setGuessFeedback({
+          tone: "error",
+          message: "Connect your wallet to continue.",
+        });
+        showNotice("Connect your wallet to continue.");
+        return;
+      }
       if (isGuessLoading) return;
       setIsGuessLoading(true);
       const ok = await requestSignature(
@@ -493,7 +513,7 @@ export default function Home() {
         setIsGuessLoading(false);
         return;
       }
-      const address = walletAddress ?? (await connectWallet());
+      const address = ensuredAddress;
       if (!address || !crackVault) {
         setGuessFeedback({
           tone: "error",
