@@ -9,6 +9,16 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 });
 const formatDollars = (value: number) => `$${currencyFormatter.format(value)}`;
 
+const buildRewardShares = (count: number) => {
+  const base = 26.5;
+  const step = 1;
+  const raw = Array.from({ length: count }, (_, index) =>
+    Math.max(1, base - step * index)
+  );
+  const sum = raw.reduce((total, value) => total + value, 0);
+  return raw.map((value) => value / sum);
+};
+
 type Vault = {
   id: string;
   name: string;
@@ -27,6 +37,7 @@ type Vault = {
   status: string;
   vaultState: "running" | "cracked" | "ended";
   createdAt?: string | null;
+  revealOrder?: { index: number; address: string; revealedAt: string }[];
 };
 
 const filters = ["All Vaults", "Hot", "Open", "Closing", "Cracked", "Ended"];
@@ -64,6 +75,7 @@ export default function Home() {
   const [guessValues, setGuessValues] = useState<string[]>([]);
   const [revealedChars, setRevealedChars] = useState<(string | null)[]>([]);
   const [isGuessLoading, setIsGuessLoading] = useState(false);
+  const [showCrackedCelebration, setShowCrackedCelebration] = useState(false);
   const [guessFeedback, setGuessFeedback] = useState<{
     tone: "success" | "info" | "error";
     message: string;
@@ -521,6 +533,9 @@ export default function Home() {
         setActiveGuessIndex(null);
         await loadVaults();
         if (data.vault.vaultState === "cracked") {
+          setShowCrackedCelebration(true);
+        }
+        if (data.vault.vaultState === "cracked") {
           await fetchWalletBalance(address);
         }
         const cost = crackVault?.entryFee ?? "$0";
@@ -551,6 +566,7 @@ export default function Home() {
       setGuessValues([]);
       setRevealedChars([]);
       setGuessFeedback(null);
+      setShowCrackedCelebration(false);
       return;
     }
     const length = Number.parseInt(crackVault.keyLength, 10);
@@ -563,6 +579,26 @@ export default function Home() {
     setActiveGuessIndex(null);
     setGuessValues(Array.from({ length }, () => ""));
   }, [crackVault]);
+
+  useEffect(() => {
+    if (!showCrackedCelebration) return;
+    const timer = window.setTimeout(() => {
+      setShowCrackedCelebration(false);
+    }, 4000);
+    return () => window.clearTimeout(timer);
+  }, [showCrackedCelebration]);
+
+  useEffect(() => {
+    if (!vaults.length) return;
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const targetId = params.get("vault");
+    if (!targetId) return;
+    const target = vaults.find((vault) => vault.id === targetId);
+    if (target) {
+      setCrackVault(target);
+    }
+  }, [vaults]);
 
   const isCrackClosed = Boolean(
     crackVault &&
@@ -1042,12 +1078,21 @@ export default function Home() {
                       </p>
                     </div>
                     {vault.vaultState === "running" ? (
-                      <button
-                        className="cursor-pointer rounded-full bg-red-500 px-5 py-2 text-sm font-semibold text-white shadow-[0_0_25px_rgba(225,29,72,0.35)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_35px_rgba(225,29,72,0.55)] active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
-                        onClick={() => setCrackVault(vault)}
-                      >
-                        Crack
-                      </button>
+                      <div className="flex flex-col items-start gap-2">
+                        <button
+                          className="cursor-pointer rounded-full bg-red-500 px-5 py-2 text-sm font-semibold text-white shadow-[0_0_25px_rgba(225,29,72,0.35)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_35px_rgba(225,29,72,0.55)] active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                          onClick={() => setCrackVault(vault)}
+                        >
+                          Crack
+                        </button>
+                        <Link
+                          href={`/?vault=${vault.id}`}
+                          className="text-[0.65rem] uppercase tracking-[0.25em] text-white/60 transition hover:text-white"
+                          onClick={() => setCrackVault(vault)}
+                        >
+                          Open Vault
+                        </Link>
+                      </div>
                     ) : (
                       <button className="cursor-default rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm font-semibold text-white/50">
                         Closed
@@ -1066,6 +1111,49 @@ export default function Home() {
                       style={{ width: `${vault.progress}%` }}
                     />
                   </div>
+                </div>
+                <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                  <p className="text-[0.65rem] uppercase tracking-[0.2em] text-white/50">
+                    Contributors
+                  </p>
+                  {vault.revealOrder && vault.revealOrder.length ? (
+                    <div className="mt-3 grid gap-2 text-xs text-white/70">
+                      {(() => {
+                        const unique = Array.from(
+                          new Map(
+                            vault.revealOrder.map((entry) => [
+                              entry.address,
+                              entry,
+                            ])
+                          ).values()
+                        );
+                        const shares = buildRewardShares(unique.length);
+                        return unique.map((entry, index) => {
+                          const share = shares[index] ?? 0;
+                          const amount = (vault.rewardValue || 0) * share;
+                          return (
+                            <div
+                              key={`${vault.id}-${entry.address}`}
+                              className="flex items-center justify-between"
+                            >
+                              <span className="font-mono text-[0.65rem] text-white/70">
+                                {entry.address.slice(0, 6)}...
+                                {entry.address.slice(-4)}
+                              </span>
+                              <span className="text-white/60">
+                                {(share * 100).toFixed(1)}% ·{" "}
+                                {formatDollars(amount)}
+                              </span>
+                            </div>
+                          );
+                        });
+                      })()}
+                    </div>
+                  ) : (
+                    <p className="mt-2 text-xs text-white/50">
+                      No contributors yet.
+                    </p>
+                  )}
                 </div>
               </div>
             ))}
@@ -1470,6 +1558,23 @@ export default function Home() {
                 {crackVault.entryFee}
               </p>
             </div>
+            {showCrackedCelebration ? (
+              <div className="relative mb-4 overflow-hidden rounded-2xl border border-emerald-400/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-100">
+                <div className="absolute inset-0 opacity-60">
+                  <div className="absolute -top-6 left-6 h-12 w-12 animate-ping rounded-full bg-emerald-400/20" />
+                  <div className="absolute top-2 right-10 h-10 w-10 animate-ping rounded-full bg-emerald-300/20 [animation-delay:200ms]" />
+                  <div className="absolute bottom-0 left-1/2 h-10 w-10 -translate-x-1/2 animate-ping rounded-full bg-amber-300/20 [animation-delay:400ms]" />
+                </div>
+                <div className="relative flex items-center justify-between gap-3">
+                  <span className="font-semibold">
+                    Vault cracked! Rewards are being distributed.
+                  </span>
+                  <span className="rounded-full border border-emerald-300/40 px-3 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-emerald-200">
+                    Celebrating
+                  </span>
+                </div>
+              </div>
+            ) : null}
             <div className="grid gap-4">
               <div className="grid gap-3">
                 <label className="text-xs uppercase tracking-[0.2em] text-white/50">

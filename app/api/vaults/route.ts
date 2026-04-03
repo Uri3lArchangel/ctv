@@ -132,6 +132,7 @@ const shapeVault = (vault: any) => {
     timeLeft: formatTimeLeft(minutesLeft),
     status: vault.status,
     vaultState: vault.vaultState,
+    revealOrder: Array.isArray(vault.revealOrder) ? vault.revealOrder : [],
     createdAt: vault.createdAt
       ? new Date(vault.createdAt).toISOString()
       : null,
