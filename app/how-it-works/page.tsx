@@ -3,9 +3,9 @@ import Link from "next/link";
 export default function HowItWorks() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-black text-white">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(225,29,72,0.25),transparent_55%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_60%,rgba(228,178,86,0.08),transparent_45%)]" />
-      <div className="pointer-events-none absolute inset-0 opacity-60 [background-image:linear-gradient(120deg,rgba(255,255,255,0.06)_0%,transparent_30%,rgba(255,255,255,0.04)_70%,transparent_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(225,29,72,0.25),transparent_55%)] ambient-float" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_60%,rgba(228,178,86,0.08),transparent_45%)] ambient-float-slow" />
+      <div className="pointer-events-none absolute inset-0 opacity-60 [background-image:linear-gradient(120deg,rgba(255,255,255,0.06)_0%,transparent_30%,rgba(255,255,255,0.04)_70%,transparent_100%)] ambient-pulse" />
 
       <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 pb-24 pt-12 lg:flex-row">
         <aside className="w-full space-y-4 lg:sticky lg:top-8 lg:max-w-xs lg:self-start">

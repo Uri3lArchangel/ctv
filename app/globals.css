@@ -58,3 +58,55 @@ html {
 .fade-in-up-delay {
   animation: fadeInUp 0.9s ease-out both;
 }
+
+@keyframes ambientFloat {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes ambientPulse {
+  0% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0.55;
+  }
+}
+
+@keyframes ambientDrift {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(10px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.ambient-float {
+  animation: ambientFloat 10s ease-in-out infinite;
+}
+
+.ambient-float-slow {
+  animation: ambientFloat 16s ease-in-out infinite;
+}
+
+.ambient-pulse {
+  animation: ambientPulse 8s ease-in-out infinite;
+}
+
+.ambient-drift {
+  animation: ambientDrift 14s ease-in-out infinite;
+}

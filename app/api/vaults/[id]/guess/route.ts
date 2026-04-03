@@ -30,11 +30,14 @@ const buildProgress = (revealedKey: (string | null)[], length: number) => {
 };
 
 const buildRewardShares = (count: number) => {
-  const base = 26.5;
-  const step = 1;
-  const raw = Array.from({ length: count }, (_, index) =>
-    Math.max(1, base - step * index)
-  );
+  if (count <= 0) return [];
+  if (count === 1) return [1];
+  const delta = 0.12;
+  const raw = Array.from({ length: count }, (_, index) => {
+    const position = index / (count - 1);
+    const bias = 1 - 2 * position;
+    return 1 + delta * bias;
+  });
   const sum = raw.reduce((total, value) => total + value, 0);
   return raw.map((value) => value / sum);
 };
@@ -227,19 +230,16 @@ export async function POST(
 
     if (cracked && !vault.crackedPayoutProcessed) {
       const poolValue = nextLockedValue;
-      const contributors = revealOrder
-        .filter((entry) => entry && typeof entry.address === "string")
-        .map((entry) => entry.address);
-      const uniqueContributors = contributors.length
-        ? contributors
-        : revealedBy.filter((entry) => typeof entry === "string") as string[];
-      const shares = buildRewardShares(uniqueContributors.length);
+      const ordered = revealOrder.filter(
+        (entry) => entry && typeof entry.address === "string"
+      );
+      const shares = buildRewardShares(length);
       const payoutMap = new Map<string, number>();
-      uniqueContributors.forEach((address, index) => {
+      ordered.forEach((entry, index) => {
         const shareAmount = poolValue * (shares[index] ?? 0);
         payoutMap.set(
-          address,
-          (payoutMap.get(address) ?? 0) + shareAmount
+          entry.address,
+          (payoutMap.get(entry.address) ?? 0) + shareAmount
         );
       });
       const payouts = Array.from(payoutMap.entries()).map(

@@ -10,11 +10,14 @@ const currencyFormatter = new Intl.NumberFormat("en-US", {
 const formatDollars = (value: number) => `$${currencyFormatter.format(value)}`;
 
 const buildRewardShares = (count: number) => {
-  const base = 26.5;
-  const step = 1;
-  const raw = Array.from({ length: count }, (_, index) =>
-    Math.max(1, base - step * index)
-  );
+  if (count <= 0) return [];
+  if (count === 1) return [1];
+  const delta = 0.12;
+  const raw = Array.from({ length: count }, (_, index) => {
+    const position = index / (count - 1);
+    const bias = 1 - 2 * position;
+    return 1 + delta * bias;
+  });
   const sum = raw.reduce((total, value) => total + value, 0);
   return raw.map((value) => value / sum);
 };
@@ -612,9 +615,9 @@ export default function Home() {
       className="relative min-h-screen overflow-hidden bg-black text-white"
       suppressHydrationWarning
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(225,29,72,0.25),transparent_55%)]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_60%,rgba(228,178,86,0.08),transparent_45%)]" />
-      <div className="pointer-events-none absolute inset-0 opacity-60 [background-image:linear-gradient(120deg,rgba(255,255,255,0.06)_0%,transparent_30%,rgba(255,255,255,0.04)_70%,transparent_100%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(225,29,72,0.25),transparent_55%)] ambient-float" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_60%,rgba(228,178,86,0.08),transparent_45%)] ambient-float-slow" />
+      <div className="pointer-events-none absolute inset-0 opacity-60 [background-image:linear-gradient(120deg,rgba(255,255,255,0.06)_0%,transparent_30%,rgba(255,255,255,0.04)_70%,transparent_100%)] ambient-pulse" />
 
       <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-14 px-6 pb-24 pt-10 fade-in-up">
         <header className="flex flex-wrap items-center justify-between gap-6">
@@ -1113,36 +1116,44 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                  <p className="text-[0.65rem] uppercase tracking-[0.2em] text-white/50">
+                  <p className="text-[0.75rem] uppercase tracking-[0.2em] text-white/50">
                     Contributors
                   </p>
                   {vault.revealOrder && vault.revealOrder.length ? (
-                    <div className="mt-3 grid gap-2 text-xs text-white/70">
+                    <div className="mt-3 grid gap-2 text-sm text-white/80">
                       {(() => {
-                        const unique = Array.from(
-                          new Map(
-                            vault.revealOrder.map((entry) => [
-                              entry.address,
-                              entry,
-                            ])
-                          ).values()
-                        );
-                        const shares = buildRewardShares(unique.length);
-                        return unique.map((entry, index) => {
+                        const length = Number.parseInt(vault.keyLength, 10) || 0;
+                        const shares = buildRewardShares(length);
+                        const payoutMap = new Map<
+                          string,
+                          { amount: number; share: number }
+                        >();
+                        vault.revealOrder.forEach((entry, index) => {
                           const share = shares[index] ?? 0;
                           const amount = (vault.rewardValue || 0) * share;
+                          const prev = payoutMap.get(entry.address);
+                          payoutMap.set(entry.address, {
+                            amount: (prev?.amount ?? 0) + amount,
+                            share: (prev?.share ?? 0) + share,
+                          });
+                        });
+                        const entries = Array.from(payoutMap.entries());
+                        return entries.map(([address, payout]) => {
+                          const resolved = payout ?? {
+                            amount: 0,
+                            share: 0,
+                          };
                           return (
                             <div
-                              key={`${vault.id}-${entry.address}`}
+                              key={`${vault.id}-${address}`}
                               className="flex items-center justify-between"
                             >
-                              <span className="font-mono text-[0.65rem] text-white/70">
-                                {entry.address.slice(0, 6)}...
-                                {entry.address.slice(-4)}
+                              <span className="font-mono text-xs text-white/80">
+                                {address.slice(0, 6)}...{address.slice(-4)}
                               </span>
-                              <span className="text-white/60">
-                                {(share * 100).toFixed(1)}% ·{" "}
-                                {formatDollars(amount)}
+                              <span className="text-white/70">
+                                {(resolved.share * 100).toFixed(1)}% ·{" "}
+                                {formatDollars(resolved.amount)}
                               </span>
                             </div>
                           );
@@ -1150,7 +1161,7 @@ export default function Home() {
                       })()}
                     </div>
                   ) : (
-                    <p className="mt-2 text-xs text-white/50">
+                    <p className="mt-2 text-sm text-white/60">
                       No contributors yet.
                     </p>
                   )}
@@ -1570,7 +1581,7 @@ export default function Home() {
                     Vault cracked! Rewards are being distributed.
                   </span>
                   <span className="rounded-full border border-emerald-300/40 px-3 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-emerald-200">
-                    Celebrating
+                    Vault Opened
                   </span>
                 </div>
               </div>
@@ -1592,8 +1603,11 @@ export default function Home() {
                       const filledIndex = guessValues.findIndex(
                         (value) => value.trim().length > 0
                       );
+                      const hasActiveValue =
+                        activeGuessIndex !== null &&
+                        (guessValues[activeGuessIndex] ?? "").trim().length > 0;
                       const lockIndex =
-                        activeGuessIndex !== null
+                        hasActiveValue
                           ? activeGuessIndex
                           : filledIndex !== -1
                           ? filledIndex
