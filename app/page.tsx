@@ -1264,11 +1264,42 @@ export default function Home() {
                 <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/60">
                   Loading accounts...
                 </div>
-              ) : connectedAccounts.length ? (
-                connectedAccounts.map((account) => {
+              ) : (() => {
+                const normalizedWallet = (walletAddress ?? "").toLowerCase();
+                const uniqueAccounts = [
+                  ...new Set(
+                    connectedAccounts.map((account) => account.toLowerCase())
+                  ),
+                ].map(
+                  (account) =>
+                    connectedAccounts.find(
+                      (original) => original.toLowerCase() === account
+                    ) ?? account
+                );
+                const displayAccounts = uniqueAccounts.length
+                  ? uniqueAccounts
+                  : walletAddress
+                  ? [walletAddress]
+                  : [];
+                if (!displayAccounts.length) {
+                  return (
+                    <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/60">
+                      No connected accounts found. Open your wallet and connect.
+                    </div>
+                  );
+                }
+                return (
+                  <div className="grid gap-3">
+                    {connectedAccounts.length === 0 && walletAddress ? (
+                      <div className="rounded-2xl border border-amber-300/20 bg-amber-400/10 px-4 py-2 text-xs text-amber-100">
+                        Showing current wallet. Open your wallet to view all
+                        accounts.
+                      </div>
+                    ) : null}
+                    {displayAccounts.map((account) => {
                   const isActive =
                     account.toLowerCase() ===
-                    (walletAddress ?? "").toLowerCase();
+                    normalizedWallet;
                   return (
                     <button
                       key={account}
@@ -1284,7 +1315,7 @@ export default function Home() {
                       </span>
                       {isActive ? (
                         <span className="rounded-full border border-red-400/40 px-2 py-0.5 text-[0.65rem] uppercase tracking-[0.2em] text-red-200">
-                          Active
+                          {connectedAccounts.length ? "Active" : "Current"}
                         </span>
                       ) : (
                         <span className="text-[0.65rem] uppercase tracking-[0.2em] text-white/50">
@@ -1293,12 +1324,10 @@ export default function Home() {
                       )}
                     </button>
                   );
-                })
-              ) : (
-                <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/60">
-                  No connected accounts found. Open your wallet and connect.
-                </div>
-              )}
+                })}
+                  </div>
+                );
+              })()}
               <button
                 className="mt-2 w-full cursor-pointer rounded-2xl border border-white/15 bg-white/5 py-3 text-xs uppercase tracking-[0.3em] text-white/70 transition hover:border-white/30 hover:text-white"
                 onClick={loadConnectedAccounts}
