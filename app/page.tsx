@@ -849,11 +849,11 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-black/40 px-5 py-5 transition hover:border-white/20 hover:bg-white/5 overflow-hidden">
+              <div className="rounded-2xl border border-white/10 bg-black/40 px-2 break-all py-5 transition hover:border-white/20 hover:bg-white/5 overflow-hidden">
                 <p className="text-[0.7rem] uppercase tracking-[0.3em] text-white/50">
                   Recently Cracked
                 </p>
-                <div className="mt-4 grid gap-2 text-sm text-white/70 break-all ">
+                <div className="mt-4 grid gap-3 text-sm text-white/70 ">
                   {recentCracked.length ? (
                     recentCracked.map((item) => (
                     <div
