@@ -853,7 +853,7 @@ export default function Home() {
                 <p className="text-[0.7rem] uppercase tracking-[0.3em] text-white/50">
                   Recently Cracked
                 </p>
-                <div className="mt-4 grid gap-3 text-sm text-white/70 break-words p-2">
+                <div className="mt-4 grid gap-2 text-sm text-white/70 break-all ">
                   {recentCracked.length ? (
                     recentCracked.map((item) => (
                     <div
