@@ -331,7 +331,14 @@ export default function Home() {
         const accounts = (await ethereum.request({
           method: "eth_accounts",
         })) as string[];
-        const address = accounts?.[0] ?? null;
+        const stored = window.localStorage.getItem("ctv-last-wallet");
+        const normalizedStored = stored?.toLowerCase() ?? "";
+        const address =
+          accounts.find(
+            (account) => account.toLowerCase() === normalizedStored
+          ) ??
+          accounts?.[0] ??
+          null;
         setConnectedAccounts(Array.isArray(accounts) ? accounts : []);
         if (address) {
           setWalletAddress(address);
@@ -340,6 +347,7 @@ export default function Home() {
           fetchWalletBalance(address);
         } else {
           setWalletAddress(null);
+          window.localStorage.removeItem("ctv-last-wallet");
           setIsWalletVerified(false);
         }
       } catch {
@@ -350,7 +358,12 @@ export default function Home() {
     reconnect();
 
     const handleAccountsChanged = (accounts: string[]) => {
-      const address = accounts?.[0] ?? null;
+      const stored = window.localStorage.getItem("ctv-last-wallet");
+      const normalizedStored = stored?.toLowerCase() ?? "";
+      const address =
+        accounts.find((account) => account.toLowerCase() === normalizedStored) ??
+        accounts?.[0] ??
+        null;
       setConnectedAccounts(Array.isArray(accounts) ? accounts : []);
       setWalletAddress(address);
       if (address) {
@@ -360,6 +373,7 @@ export default function Home() {
       } else {
         setWalletBalance(null);
         setDemoCredits(0);
+        window.localStorage.removeItem("ctv-last-wallet");
         setIsWalletVerified(false);
       }
     };
@@ -402,10 +416,15 @@ export default function Home() {
     }
   };
 
+  const ensureWalletConnected = async () => {
+    if (walletAddress) return walletAddress;
+    return connectWallet();
+  };
+
   const handleCreateVault = async () => {
     if (isDemo) {
-      const ensuredAddress = walletAddress ?? (await connectWallet());
-      if (!ensuredAddress || !isWalletVerified) {
+      const ensuredAddress = await ensureWalletConnected();
+      if (!ensuredAddress) {
         showNotice("Connect your wallet to continue.");
         return;
       }
@@ -459,6 +478,24 @@ export default function Home() {
   };
 
   const handleSubmitGuess = async () => {
+    let ensuredAddress: string | null = walletAddress;
+    if (isDemo && (!walletAddress || !isWalletVerified)) {
+      ensuredAddress = await ensureWalletConnected();
+      if (!ensuredAddress) {
+        setGuessFeedback({
+          tone: "error",
+          message: "Connect your wallet to continue.",
+        });
+        showNotice("Connect your wallet to continue.");
+        return;
+      }
+      const hasGuessInput = guessValues.some(
+        (value) => value.trim().length > 0
+      );
+      if (!hasGuessInput) {
+        return;
+      }
+    }
     const index =
       activeGuessIndex !== null
         ? activeGuessIndex
@@ -489,8 +526,8 @@ export default function Home() {
       return;
     }
     if (isDemo) {
-      const ensuredAddress = walletAddress ?? (await connectWallet());
-      if (!ensuredAddress || !isWalletVerified) {
+      ensuredAddress = ensuredAddress ?? (await ensureWalletConnected());
+      if (!ensuredAddress) {
         setGuessFeedback({
           tone: "error",
           message: "Connect your wallet to continue.",
@@ -1557,7 +1594,11 @@ export default function Home() {
                 className="mt-1 cursor-pointer rounded-2xl bg-red-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_45px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
                 onClick={handleCreateVault}
               >
-                {isDemo ? "Create Demo Vault" : "Create Vault"}
+                {!walletAddress || !isWalletVerified
+                  ? "Connect Wallet"
+                  : isDemo
+                  ? "Create Demo Vault"
+                  : "Create Vault"}
               </button>
             </div>
           </div>
@@ -1712,6 +1753,8 @@ export default function Home() {
                 >
                   {isGuessLoading
                     ? "Submitting..."
+                    : !walletAddress || !isWalletVerified
+                    ? "Connect Wallet"
                     : isDemo
                     ? "Submit Guess (Demo)"
                     : "Submit Guess"}
