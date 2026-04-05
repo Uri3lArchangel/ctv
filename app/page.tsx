@@ -793,11 +793,11 @@ export default function Home() {
                 <p className="text-[0.7rem] uppercase tracking-[0.3em] text-white/50">
                   Hottest Vault
                 </p>
-                <div className="mt-4 flex items-center justify-between gap-3">
-                  <p className="min-w-0 flex-1 truncate text-lg font-semibold text-white">
+                <div className="mt-4 flex flex-wrap items-start justify-between gap-3">
+                  <p className="min-w-0 flex-1 break-words text-lg font-semibold text-white">
                     {hottestVault ? hottestVault.name : "No active vaults"}
                   </p>
-                  <span className="whitespace-nowrap rounded-full border border-red-400/30 bg-red-500/10 px-3 py-1 text-xs text-red-100">
+                  <span className="rounded-full border border-red-400/30 bg-red-500/10 px-3 py-1 text-xs text-red-100">
                     {hottestVault ? `${hottestVault.progress}% solved` : "--"}
                   </span>
                 </div>
@@ -815,11 +815,11 @@ export default function Home() {
                 <p className="text-[0.7rem] uppercase tracking-[0.3em] text-white/50">
                   Closing Soon
                 </p>
-                <div className="mt-4 flex items-center justify-between gap-3">
-                  <p className="min-w-0 flex-1 truncate text-lg font-semibold text-white">
+                <div className="mt-4 flex flex-wrap items-start justify-between gap-3">
+                  <p className="min-w-0 flex-1 break-words text-lg font-semibold text-white">
                     {closingSoon ? closingSoon.name : "No active vaults"}
                   </p>
-                  <span className="whitespace-nowrap text-sm text-white/70">
+                  <span className="break-words text-sm text-white/70">
                     {closingSoon ? `${closingSoon.timeLeft} left` : "--"}
                   </span>
                 </div>
@@ -834,11 +834,11 @@ export default function Home() {
                 <p className="text-[0.7rem] uppercase tracking-[0.3em] text-white/50">
                   Highest Reward
                 </p>
-                <div className="mt-4 flex items-center justify-between gap-3">
-                  <p className="min-w-0 flex-1 truncate text-lg font-semibold text-white">
+                <div className="mt-4 flex flex-wrap items-start justify-between gap-3">
+                  <p className="min-w-0 flex-1 break-words text-lg font-semibold text-white">
                     {highestReward ? highestReward.name : "No active vaults"}
                   </p>
-                  <span className="whitespace-nowrap text-sm text-white/70">
+                  <span className="break-words text-sm text-white/70">
                     {highestReward ? highestReward.reward : "--"}
                   </span>
                 </div>
@@ -849,7 +849,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-black/40 px-2 break-all py-5 transition hover:border-white/20 hover:bg-white/5 overflow-hidden">
+              <div className="  rounded-2xl border border-white/10 bg-black/40 px-4   py-5 transition hover:border-white/20 hover:bg-white/5 ">
                 <p className="text-[0.7rem] uppercase tracking-[0.3em] text-white/50">
                   Recently Cracked
                 </p>
@@ -858,12 +858,12 @@ export default function Home() {
                     recentCracked.map((item) => (
                     <div
                       key={item.name}
-                      className="flex items-center justify-between gap-3"
+                      className="flex flex-wrap items-start justify-between gap-3"
                     >
-                      <span className="min-w-0 flex-1 truncate">
+                      <span className="min-w-0 flex-1 break-words whitespace-normal leading-snug">
                         {item.name}
                       </span>
-                      <span className="whitespace-nowrap text-white/50">
+                      <span className="break-words whitespace-normal leading-snug text-white/50">
                         {item.reward} · {item.time}
                       </span>
                     </div>
