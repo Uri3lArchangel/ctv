@@ -92,18 +92,21 @@ export default function Home() {
   const [lockMins, setLockMins] = useState("00");
   const [lockSecs, setLockSecs] = useState("00");
 
-  const recentCracked = useMemo(
-    () =>
-      vaults
-        .filter((vault) => vault.vaultState === "cracked")
-        .slice(0, 3)
-        .map((vault, index) => ({
-          name: vault.name,
-          reward: vault.reward,
-          time: index === 0 ? "12m ago" : index === 1 ? "38m ago" : "1h ago",
-        })),
-    [vaults]
-  );
+  const lastCracked = useMemo(() => {
+    const cracked = vaults.filter((vault) => vault.vaultState === "cracked");
+    if (!cracked.length) return null;
+    const sorted = [...cracked].sort((a, b) => {
+      const aTime = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const bTime = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return bTime - aTime;
+    });
+    const latest = sorted[0];
+    return {
+      name: latest.name,
+      reward: latest.reward,
+      status: latest.status,
+    };
+  }, [vaults]);
 
   const totalVaultVolume = useMemo(
     () => vaults.reduce((sum, vault) => sum + (vault.rewardValue || 0), 0),
@@ -260,7 +263,7 @@ export default function Home() {
   };
 
   const handleWalletButton = async () => {
-    if (!walletAddress) {
+    if (!walletAddress || !isWalletVerified) {
       await connectWallet();
       return;
     }
@@ -325,13 +328,18 @@ export default function Home() {
     };
 
     const reconnect = async () => {
+      const stored = window.localStorage.getItem("ctv-last-wallet");
+      if (stored && !cancelled) {
+        setWalletAddress(stored);
+        setIsWalletVerified(true);
+        fetchWalletBalance(stored);
+      }
       const ethereum = await waitForEthereum();
       if (!ethereum || cancelled) return;
       try {
         const accounts = (await ethereum.request({
           method: "eth_accounts",
         })) as string[];
-        const stored = window.localStorage.getItem("ctv-last-wallet");
         const normalizedStored = stored?.toLowerCase() ?? "";
         const address =
           accounts.find(
@@ -345,10 +353,6 @@ export default function Home() {
           window.localStorage.setItem("ctv-last-wallet", address);
           setIsWalletVerified(true);
           fetchWalletBalance(address);
-        } else {
-          setWalletAddress(null);
-          window.localStorage.removeItem("ctv-last-wallet");
-          setIsWalletVerified(false);
         }
       } catch {
         // Ignore silent reconnect errors.
@@ -696,28 +700,35 @@ export default function Home() {
             </div>
           </div>
           <nav className="flex flex-wrap items-center gap-4 text-sm text-white/70">
-            <button
-              className={`rounded-full border border-white/15 px-4 py-2 text-white/80 transition hover:border-white/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 ${
-                walletAddress ? "cursor-pointer" : "cursor-pointer"
-              }`}
-              onClick={handleWalletButton}
-            >
-              {isWalletVerified && walletAddress
-                ? `Wallet ${walletAddress.slice(0, 6)}...${walletAddress.slice(
-                    -4
-                  )}`
-                : "Connect Wallet"}
-            </button>
             {walletAddress && isWalletVerified ? (
-              <div className="flex items-center gap-2 rounded-full border border-amber-200/20 bg-amber-200/10 px-4 py-2 text-xs uppercase tracking-[0.2em] text-amber-100">
-                <span className="text-[0.6rem] text-amber-100/70">Balance</span>
-                <span className="text-sm font-semibold normal-case text-amber-50">
-                  {isBalanceLoading
-                    ? "Loading..."
-                    : formatDollars(walletBalance ?? 0)}
-                </span>
-              </div>
-            ) : null}
+              <>
+                <button
+                  className="rounded-full border border-white/15 px-4 py-2 text-white/80 transition hover:border-white/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+                  onClick={handleWalletButton}
+                >
+                  {`Wallet ${walletAddress.slice(0, 6)}...${walletAddress.slice(
+                    -4
+                  )}`}
+                </button>
+                <div className="flex items-center gap-2 rounded-full border border-amber-200/20 bg-amber-200/10 px-4 py-2 text-xs uppercase tracking-[0.2em] text-amber-100">
+                  <span className="text-[0.6rem] text-amber-100/70">
+                    Balance
+                  </span>
+                  <span className="text-sm font-semibold normal-case text-amber-50">
+                    {isBalanceLoading
+                      ? "Loading..."
+                      : formatDollars(walletBalance ?? 0)}
+                  </span>
+                </div>
+              </>
+            ) : (
+              <button
+                className="rounded-full border border-white/15 px-4 py-2 text-white/80 transition hover:border-white/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+                onClick={handleWalletButton}
+              >
+                Connect Wallet
+              </button>
+            )}
             <button
               type="button"
               disabled
@@ -822,7 +833,7 @@ export default function Home() {
                 </p>
               </div>
               <div className="rounded-full border border-red-400/30 bg-red-500/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-red-100">
-                Fee 2.5%
+                Fee 0%
               </div>
             </div>
             <div className="grid gap-4 lg:grid-cols-2">
@@ -890,21 +901,19 @@ export default function Home() {
                 <p className="text-[0.7rem] uppercase tracking-[0.3em] text-white/50">
                   Recently Cracked
                 </p>
-                <div className="mt-4 grid gap-3 text-sm text-white/70 ">
-                  {recentCracked.length ? (
-                    recentCracked.map((item) => (
-                    <div
-                      key={item.name}
-                      className="flex flex-wrap items-start justify-between gap-3"
-                    >
-                      <span className="min-w-0 flex-1 break-words whitespace-normal leading-snug">
-                        {item.name}
-                      </span>
-                      <span className="break-words whitespace-normal leading-snug text-white/50">
-                        {item.reward} · {item.time}
-                      </span>
+                <div className="mt-4">
+                  {lastCracked ? (
+                    <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                      <p className="text-[0.65rem] uppercase tracking-[0.25em] text-white/50">
+                        Latest
+                      </p>
+                      <p className="mt-2 text-sm font-semibold text-white">
+                        {lastCracked.name}
+                      </p>
+                      <p className="mt-2 text-xs text-white/60">
+                        {lastCracked.reward} · {lastCracked.status}
+                      </p>
                     </div>
-                    ))
                   ) : (
                     <p className="text-white/50">No cracked vaults yet.</p>
                   )}
@@ -946,12 +955,6 @@ export default function Home() {
                   {filter}
                 </button>
               ))}
-              <Link
-                href="/how-it-works"
-                className="cursor-pointer rounded-full border border-white/15 px-4 py-2 text-xs uppercase tracking-[0.2em] text-white/70 transition hover:-translate-y-0.5 hover:border-white/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
-              >
-                How It Works
-              </Link>
             </div>
           </div>
 
@@ -1619,16 +1622,21 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <button
-                className="mt-1 cursor-pointer rounded-2xl bg-red-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_45px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
-                onClick={handleCreateVault}
-              >
-                {!walletAddress || !isWalletVerified
-                  ? "Connect Wallet"
-                  : isDemo
-                  ? "Create Demo Vault"
-                  : "Create Vault"}
-              </button>
+              {!walletAddress || !isWalletVerified ? (
+                <button
+                  className="mt-1 cursor-pointer rounded-2xl bg-red-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_45px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                  onClick={connectWallet}
+                >
+                  Connect Wallet
+                </button>
+              ) : (
+                <button
+                  className="mt-1 cursor-pointer rounded-2xl bg-red-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_45px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                  onClick={handleCreateVault}
+                >
+                  {isDemo ? "Create Demo Vault" : "Create Vault"}
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -1775,19 +1783,26 @@ export default function Home() {
                 </div>
               ) : null}
               {!isCrackClosed ? (
-                <button
-                  className="mt-1 cursor-pointer rounded-2xl bg-red-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_45px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70 disabled:cursor-not-allowed disabled:opacity-60"
-                  onClick={handleSubmitGuess}
-                  disabled={isGuessLoading}
-                >
-                  {isGuessLoading
-                    ? "Submitting..."
-                    : !walletAddress || !isWalletVerified
-                    ? "Connect Wallet"
-                    : isDemo
-                    ? "Submit Guess (Demo)"
-                    : "Submit Guess"}
-                </button>
+                !walletAddress || !isWalletVerified ? (
+                  <button
+                    className="mt-1 cursor-pointer rounded-2xl bg-red-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_45px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                    onClick={connectWallet}
+                  >
+                    Connect Wallet
+                  </button>
+                ) : (
+                  <button
+                    className="mt-1 cursor-pointer rounded-2xl bg-red-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_45px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70 disabled:cursor-not-allowed disabled:opacity-60"
+                    onClick={handleSubmitGuess}
+                    disabled={isGuessLoading}
+                  >
+                    {isGuessLoading
+                      ? "Submitting..."
+                      : isDemo
+                      ? "Submit Guess (Demo)"
+                      : "Submit Guess"}
+                  </button>
+                )
               ) : null}
             </div>
           </div>
