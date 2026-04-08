@@ -786,7 +786,7 @@ export default function Home() {
                   </button>
                   <button
                     type="button"
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs uppercase tracking-[0.2em] text-white/60 transition hover:border-red-300/40 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                    className="cursor-pointer rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs uppercase tracking-[0.2em] text-white/60 transition hover:border-red-300/40 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
                     onClick={handleDisconnectWallet}
                   >
                     Disconnect
@@ -1242,7 +1242,7 @@ export default function Home() {
                         <button
                           type="button"
                           title="Copy referral link"
-                          className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] text-white/80 transition hover:-translate-y-0.5 hover:border-red-300/70 hover:bg-red-500/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70 active:translate-y-0 active:scale-[0.98]"
+                          className="group inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] text-white/80 transition hover:-translate-y-0.5 hover:border-red-300/70 hover:bg-red-500/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70 active:translate-y-0 active:scale-[0.98]"
                           onClick={() => handleCopyVaultLink(vault.id)}
                         >
                           <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20 text-[0.55rem] text-white/70 transition group-hover:border-red-200/70 group-hover:text-white">
@@ -1259,7 +1259,7 @@ export default function Home() {
                         <button
                           type="button"
                           title="Copy referral link"
-                          className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] text-white/80 transition hover:-translate-y-0.5 hover:border-red-300/70 hover:bg-red-500/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70 active:translate-y-0 active:scale-[0.98]"
+                          className="group inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] text-white/80 transition hover:-translate-y-0.5 hover:border-red-300/70 hover:bg-red-500/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70 active:translate-y-0 active:scale-[0.98]"
                           onClick={() => handleCopyVaultLink(vault.id)}
                         >
                           <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20 text-[0.55rem] text-white/70 transition group-hover:border-red-200/70 group-hover:text-white">
