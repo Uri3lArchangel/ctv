@@ -316,6 +316,18 @@ export default function Home() {
     showNotice("Wallet switched.");
   };
 
+  const handleDisconnectWallet = () => {
+    setWalletAddress(null);
+    setWalletBalance(null);
+    setIsWalletVerified(false);
+    setConnectedAccounts([]);
+    setAccountsOpen(false);
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem("ctv-last-wallet");
+    }
+    showNotice("Wallet disconnected.");
+  };
+
   const fetchWalletBalance = async (address: string) => {
     setIsBalanceLoading(true);
     try {
@@ -763,14 +775,23 @@ export default function Home() {
           <nav className="flex flex-wrap items-center gap-4 text-sm text-white/70">
             {walletAddress && isWalletVerified ? (
               <>
-                <button
-                  className="rounded-full border border-white/15 px-4 py-2 text-white/80 transition hover:border-white/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
-                  onClick={handleWalletButton}
-                >
-                  {`Wallet ${walletAddress.slice(0, 6)}...${walletAddress.slice(
-                    -4
-                  )}`}
-                </button>
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    className="rounded-full border border-white/15 px-4 py-2 text-white/80 transition hover:border-white/30 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+                    onClick={handleWalletButton}
+                  >
+                    {`Wallet ${walletAddress.slice(0, 6)}...${walletAddress.slice(
+                      -4
+                    )}`}
+                  </button>
+                  <button
+                    type="button"
+                    className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs uppercase tracking-[0.2em] text-white/60 transition hover:border-red-300/40 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                    onClick={handleDisconnectWallet}
+                  >
+                    Disconnect
+                  </button>
+                </div>
                 <div className="flex items-center gap-2 rounded-full border border-amber-200/20 bg-amber-200/10 px-4 py-2 text-xs uppercase tracking-[0.2em] text-amber-100">
                   <span className="text-[0.6rem] text-amber-100/70">
                     Balance
@@ -1220,9 +1241,13 @@ export default function Home() {
                         </Link>
                         <button
                           type="button"
-                          className="text-[0.65rem] uppercase tracking-[0.25em] text-white/60 transition hover:text-white"
+                          title="Copy referral link"
+                          className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] text-white/80 transition hover:-translate-y-0.5 hover:border-red-300/70 hover:bg-red-500/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70 active:translate-y-0 active:scale-[0.98]"
                           onClick={() => handleCopyVaultLink(vault.id)}
                         >
+                          <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20 text-[0.55rem] text-white/70 transition group-hover:border-red-200/70 group-hover:text-white">
+                            ↗
+                          </span>
                           Copy Link
                         </button>
                       </div>
@@ -1233,9 +1258,13 @@ export default function Home() {
                         </button>
                         <button
                           type="button"
-                          className="text-[0.65rem] uppercase tracking-[0.25em] text-white/60 transition hover:text-white"
+                          title="Copy referral link"
+                          className="group inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] text-white/80 transition hover:-translate-y-0.5 hover:border-red-300/70 hover:bg-red-500/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70 active:translate-y-0 active:scale-[0.98]"
                           onClick={() => handleCopyVaultLink(vault.id)}
                         >
+                          <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20 text-[0.55rem] text-white/70 transition group-hover:border-red-200/70 group-hover:text-white">
+                            ↗
+                          </span>
                           Copy Link
                         </button>
                       </div>
