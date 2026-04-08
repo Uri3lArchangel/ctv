@@ -1226,12 +1226,6 @@ export default function Home() {
                     </div>
                     {vault.vaultState === "running" ? (
                       <div className="flex flex-col items-start gap-2">
-                        <button
-                          className="cursor-pointer rounded-full bg-red-500 px-5 py-2 text-sm font-semibold text-white shadow-[0_0_25px_rgba(225,29,72,0.35)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_35px_rgba(225,29,72,0.55)] active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
-                          onClick={() => setCrackVault(vault)}
-                        >
-                          Crack
-                        </button>
                         <Link
                           href={`/?vault=${vault.id}`}
                           className="text-[0.65rem] uppercase tracking-[0.25em] text-white/60 transition hover:text-white"
@@ -1249,6 +1243,12 @@ export default function Home() {
                             ↗
                           </span>
                           Copy Link
+                        </button>
+                        <button
+                          className="cursor-pointer rounded-full bg-red-500 px-5 py-2 text-sm font-semibold text-white shadow-[0_0_25px_rgba(225,29,72,0.35)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_35px_rgba(225,29,72,0.55)] active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                          onClick={() => setCrackVault(vault)}
+                        >
+                          Crack
                         </button>
                       </div>
                     ) : (
