@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
+import { applyReferralBonus } from "@/lib/referrals";
 
 const CREATE_COST = 50;
 const DEFAULT_KEY_CHARS = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -182,6 +183,12 @@ export async function GET() {
                 $set: { updatedAt: new Date(now) },
               }
             );
+            await applyReferralBonus({
+              wallets,
+              earnerAddress: creatorAddress,
+              amount: payoutAmount,
+              now: new Date(now),
+            });
           }
 
           await vaults.updateOne(

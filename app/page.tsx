@@ -62,6 +62,7 @@ export default function Home() {
   const [crackVault, setCrackVault] = useState<Vault | null>(null);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [walletBalance, setWalletBalance] = useState<number | null>(null);
+  const [referrerAddress, setReferrerAddress] = useState<string | null>(null);
   const [isBalanceLoading, setIsBalanceLoading] = useState(false);
   const [isWalletVerified, setIsWalletVerified] = useState(false);
   const [isDemo, setIsDemo] = useState(true);
@@ -177,6 +178,41 @@ export default function Home() {
     window.setTimeout(() => setNotice(null), 3000);
   };
 
+  const buildVaultLink = (vaultId: string) => {
+    if (typeof window === "undefined") return "";
+    const params = new URLSearchParams({ vault: vaultId });
+    if (walletAddress && isWalletVerified) {
+      params.set("ref", walletAddress.toLowerCase());
+    }
+    return `${window.location.origin}/?${params.toString()}`;
+  };
+
+  const handleCopyVaultLink = async (vaultId: string) => {
+    if (!walletAddress || !isWalletVerified) {
+      showNotice("Connect your wallet to copy a referral link.");
+      return;
+    }
+    const link = buildVaultLink(vaultId);
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(link);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = link;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+      showNotice("Vault link copied.");
+    } catch {
+      showNotice("Unable to copy link.");
+    }
+  };
+
   const loadVaults = async () => {
     setIsVaultsLoading(true);
     try {
@@ -283,10 +319,19 @@ export default function Home() {
   const fetchWalletBalance = async (address: string) => {
     setIsBalanceLoading(true);
     try {
+      const normalized = address.toLowerCase();
+      const resolvedReferrer =
+        referrerAddress &&
+        referrerAddress.toLowerCase() !== normalized
+          ? referrerAddress.toLowerCase()
+          : null;
       const response = await fetch("/api/wallet", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ address }),
+        body: JSON.stringify({
+          address,
+          ...(resolvedReferrer ? { referrer: resolvedReferrer } : {}),
+        }),
       });
       if (!response.ok) {
         throw new Error("Failed to load balance.");
@@ -312,6 +357,22 @@ export default function Home() {
 
   useEffect(() => {
     loadVaults();
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    if (ref) {
+      const normalized = ref.toLowerCase();
+      setReferrerAddress(normalized);
+      window.localStorage.setItem("ctv-referrer", normalized);
+      return;
+    }
+    const stored = window.localStorage.getItem("ctv-referrer");
+    if (stored) {
+      setReferrerAddress(stored.toLowerCase());
+    }
   }, []);
 
   useEffect(() => {
@@ -1157,11 +1218,27 @@ export default function Home() {
                         >
                           Open Vault
                         </Link>
+                        <button
+                          type="button"
+                          className="text-[0.65rem] uppercase tracking-[0.25em] text-white/60 transition hover:text-white"
+                          onClick={() => handleCopyVaultLink(vault.id)}
+                        >
+                          Copy Link
+                        </button>
                       </div>
                     ) : (
-                      <button className="cursor-default rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm font-semibold text-white/50">
-                        Closed
-                      </button>
+                      <div className="flex flex-col items-start gap-2">
+                        <button className="cursor-default rounded-full border border-white/10 bg-white/5 px-5 py-2 text-sm font-semibold text-white/50">
+                          Closed
+                        </button>
+                        <button
+                          type="button"
+                          className="text-[0.65rem] uppercase tracking-[0.25em] text-white/60 transition hover:text-white"
+                          onClick={() => handleCopyVaultLink(vault.id)}
+                        >
+                          Copy Link
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>

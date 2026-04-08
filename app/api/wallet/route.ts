@@ -5,7 +5,10 @@ const DEFAULT_START_BALANCE = 10000;
 
 export async function POST(request: Request) {
   try {
-    const body = (await request.json()) as { address?: string };
+    const body = (await request.json()) as {
+      address?: string;
+      referrer?: string;
+    };
     const rawAddress = body.address?.trim();
 
     if (!rawAddress) {
@@ -16,6 +19,9 @@ export async function POST(request: Request) {
     }
 
     const address = rawAddress.toLowerCase();
+    const rawReferrer = body.referrer?.trim().toLowerCase();
+    const referrer =
+      rawReferrer && rawReferrer !== address ? rawReferrer : null;
     const client = await clientPromise;
     const dbName = process.env.MONGODB_DB || "ctv";
     const db = client.db(dbName);
@@ -25,10 +31,26 @@ export async function POST(request: Request) {
 
     if (!existing) {
       const now = new Date();
+      let referredBy: string | null = null;
+      if (referrer) {
+        const refWallet = await wallets.findOne(
+          { address: referrer },
+          { projection: { address: 1 } }
+        );
+        if (refWallet) {
+          referredBy = referrer;
+        }
+      }
       const doc = {
         address,
         balance: DEFAULT_START_BALANCE,
         welcomeBonusGranted: true,
+        ...(referredBy
+          ? {
+              referredBy,
+              referredAt: now,
+            }
+          : {}),
         createdAt: now,
         updatedAt: now,
       };

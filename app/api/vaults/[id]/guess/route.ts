@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { ObjectId } from "mongodb";
 import clientPromise from "@/lib/mongodb";
+import { applyReferralBonus } from "@/lib/referrals";
 
 
 const formatDollars = (value: number) => {
@@ -258,6 +259,16 @@ export async function POST(
               $set: { updatedAt: now },
             }
           )
+        )
+      );
+      await Promise.all(
+        payouts.map((payout) =>
+          applyReferralBonus({
+            wallets,
+            earnerAddress: payout.address,
+            amount: payout.amount,
+            now,
+          })
         )
       );
 
