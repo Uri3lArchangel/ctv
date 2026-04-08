@@ -183,12 +183,14 @@ export async function GET() {
                 $set: { updatedAt: new Date(now) },
               }
             );
-            await applyReferralBonus({
-              wallets,
-              earnerAddress: creatorAddress,
-              amount: payoutAmount,
-              now: new Date(now),
-            });
+            if (creatorAddress) {
+              await applyReferralBonus({
+                wallets,
+                earnerAddress: creatorAddress,
+                amount: payoutAmount,
+                now: new Date(now),
+              });
+            }
           }
 
           await vaults.updateOne(
