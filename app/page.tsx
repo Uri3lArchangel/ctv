@@ -749,14 +749,14 @@ export default function Home() {
       className="relative min-h-screen overflow-hidden bg-black text-white"
       suppressHydrationWarning
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(225,29,72,0.25),transparent_55%)] ambient-float" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(186,159,51,0.25),transparent_55%)] ambient-float" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_60%,rgba(228,178,86,0.08),transparent_45%)] ambient-float-slow" />
       <div className="pointer-events-none absolute inset-0 opacity-60 [background-image:linear-gradient(120deg,rgba(255,255,255,0.06)_0%,transparent_30%,rgba(255,255,255,0.04)_70%,transparent_100%)] ambient-pulse" />
 
       <div className="relative mx-auto flex w-full max-w-6xl flex-col gap-14 px-6 pb-24 pt-10 fade-in-up">
         <header className="flex flex-wrap items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <div className="flex h-13 w-13 items-center justify-center rounded-full border border-red-500/40 bg-red-500/10 shadow-[0_0_25px_rgba(225,29,72,0.35)]">
+            <div className="flex h-13 w-13 items-center justify-center rounded-full border border-amber-500/40 bg-amber-500/10 shadow-[0_0_25px_rgba(186,159,51,0.35)]">
               <Image
                 src="/logo.png"
                 alt="Crack The Vault"
@@ -767,7 +767,7 @@ export default function Home() {
               />
             </div>
             <div>
-              <p className="text-sm uppercase tracking-[0.3em] text-red-300/70">
+              <p className="text-sm uppercase tracking-[0.3em] text-amber-300/70">
                 Crack The Vault
               </p>
             </div>
@@ -786,7 +786,7 @@ export default function Home() {
                   </button>
                   <button
                     type="button"
-                    className="cursor-pointer rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs uppercase tracking-[0.2em] text-white/60 transition hover:border-red-300/40 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                    className="cursor-pointer rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs uppercase tracking-[0.2em] text-white/60 transition hover:border-amber-300/40 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
                     onClick={handleDisconnectWallet}
                   >
                     Disconnect
@@ -823,9 +823,9 @@ export default function Home() {
               </span>
               <span className="relative flex h-6 w-12 items-center rounded-full border border-white/15 bg-black/40">
                 <span
-                  className={`absolute top-0.5 h-5 w-5 rounded-full shadow-[0_0_12px_rgba(225,29,72,0.45)] transition ${
+                  className={`absolute top-0.5 h-5 w-5 rounded-full shadow-[0_0_12px_rgba(186,159,51,0.45)] transition ${
                     isDemo
-                      ? "left-0.5 bg-red-400"
+                      ? "left-0.5 bg-amber-400"
                       : "left-6 bg-white/40"
                   }`}
                 />
@@ -839,14 +839,14 @@ export default function Home() {
 
         <section className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="flex flex-col gap-8">
-            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-red-200 shadow-[0_0_20px_rgba(225,29,72,0.2)]">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-amber-200 shadow-[0_0_20px_rgba(186,159,51,0.2)]">
               {isDemo ? "Demo Vaults" : "Jackpot Live"}
-              <span className="h-2 w-2 rounded-full bg-red-400 shadow-[0_0_12px_rgba(225,29,72,0.8)]" />
+              <span className="h-2 w-2 rounded-full bg-amber-400 shadow-[0_0_12px_rgba(186,159,51,0.8)]" />
             </div>
             <div className="space-y-5">
               <h1 className="font-[var(--font-heading)] text-4xl leading-tight text-white sm:text-5xl">
                 Unlock the vault together.
-                <span className="block text-red-200">Claim the jackpot.</span>
+                <span className="block text-amber-200">Claim the jackpot.</span>
               </h1>
               <p className="max-w-xl text-lg text-white/70">
                 Crack-The-Vault is a collaborative Web3 puzzle arena. Players
@@ -887,7 +887,7 @@ export default function Home() {
             </div>
             <div className="flex flex-wrap gap-4">
               <button
-                className="cursor-pointer rounded-full bg-red-500 px-6 py-3 text-sm font-semibold text-white shadow-[0_0_30px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_40px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                className="cursor-pointer rounded-full bg-amber-500 px-6 py-3 text-sm font-semibold text-white shadow-[0_0_30px_rgba(186,159,51,0.45)] transition hover:-translate-y-0.5 hover:bg-amber-400 hover:shadow-[0_0_40px_rgba(186,159,51,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
                 onClick={handleScrollToVaults}
               >
                 Start Cracking
@@ -901,10 +901,10 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-red-500/30 bg-gradient-to-br from-[#1a0c15] via-[#12090f] to-[#0c0b10] p-7 shadow-[0_30px_120px_rgba(0,0,0,0.45)] transition hover:-translate-y-1 hover:shadow-[0_40px_140px_rgba(0,0,0,0.6)]">
+          <div className="rounded-3xl border border-amber-500/30 bg-gradient-to-br from-[#131006] via-[#100e07] to-[#0a0906] p-7 shadow-[0_30px_120px_rgba(0,0,0,0.45)] transition hover:-translate-y-1 hover:shadow-[0_40px_140px_rgba(0,0,0,0.6)]">
             <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
               <div>
-                <p className="text-[0.7rem] uppercase tracking-[0.35em] text-red-300/60">
+                <p className="text-[0.7rem] uppercase tracking-[0.35em] text-amber-300/60">
                   Vault Intel
                 </p>
                 <h2 className="mt-3 font-[var(--font-heading)] text-2xl leading-snug text-white">
@@ -914,7 +914,7 @@ export default function Home() {
                   Make faster decisions with what matters now.
                 </p>
               </div>
-              <div className="rounded-full border border-red-400/30 bg-red-500/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-red-100">
+              <div className="rounded-full border border-amber-400/30 bg-amber-500/10 px-3 py-1 text-[0.65rem] uppercase tracking-[0.3em] text-amber-100">
                 Fee 0%
               </div>
             </div>
@@ -927,13 +927,13 @@ export default function Home() {
                   <p className="min-w-0 flex-1 break-words text-lg font-semibold text-white">
                     {hottestVault ? hottestVault.name : "No active vaults"}
                   </p>
-                  <span className="rounded-full border border-red-400/30 bg-red-500/10 px-3 py-1 text-xs text-red-100">
+                  <span className="rounded-full border border-amber-400/30 bg-amber-500/10 px-3 py-1 text-xs text-amber-100">
                     {hottestVault ? `${hottestVault.progress}% solved` : "--"}
                   </span>
                 </div>
                 <div className="mt-4 h-2 w-full rounded-full bg-white/10">
                   <div
-                    className="h-2 rounded-full bg-gradient-to-r from-red-500 via-red-400 to-amber-300"
+                    className="h-2 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-300"
                     style={{
                       width: `${hottestVault ? hottestVault.progress : 0}%`,
                     }}
@@ -1004,7 +1004,7 @@ export default function Home() {
             </div>
             <div className="mt-6">
               <button
-                className="w-full cursor-pointer rounded-2xl bg-red-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_45px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                className="w-full cursor-pointer rounded-2xl bg-amber-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(186,159,51,0.45)] transition hover:-translate-y-0.5 hover:bg-amber-400 hover:shadow-[0_0_45px_rgba(186,159,51,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
                 onClick={() => setCreateOpen(true)}
               >
                 Create a Vault
@@ -1016,7 +1016,7 @@ export default function Home() {
         <section id="vaults" className="flex flex-col gap-6">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-red-300/60">
+              <p className="text-xs uppercase tracking-[0.3em] text-amber-300/60">
                 Vault Floor
               </p>
               <h2 className="font-[var(--font-heading)] text-3xl">
@@ -1028,9 +1028,9 @@ export default function Home() {
                 <button
                   key={filter}
                   onClick={() => setActiveFilter(filter)}
-                  className={`cursor-pointer rounded-full border px-4 py-2 text-xs uppercase tracking-[0.2em] transition hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/50 ${
+                  className={`cursor-pointer rounded-full border px-4 py-2 text-xs uppercase tracking-[0.2em] transition hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/50 ${
                     filter === activeFilter
-                      ? "border-red-400 bg-red-500/20 text-red-100"
+                      ? "border-amber-400 bg-amber-500/20 text-amber-100"
                       : "border-white/10 text-white/60 hover:border-white/30 hover:text-white"
                   }`}
                 >
@@ -1086,11 +1086,11 @@ export default function Home() {
                     }
                   }}
                 >
-                  <div className="pointer-events-none absolute -inset-1 rounded-full bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.35),transparent_60%)] opacity-0 blur-md transition duration-300 group-hover:opacity-100" />
-                  <div className="pointer-events-none absolute inset-0 rounded-full border border-red-400/30 bg-gradient-to-r from-red-500/20 via-amber-200/10 to-transparent transition duration-300 group-hover:border-red-300/70 group-hover:shadow-[0_0_22px_rgba(225,29,72,0.35)]" />
+                  <div className="pointer-events-none absolute -inset-1 rounded-full bg-[radial-gradient(circle_at_top,rgba(186,159,51,0.35),transparent_60%)] opacity-0 blur-md transition duration-300 group-hover:opacity-100" />
+                  <div className="pointer-events-none absolute inset-0 rounded-full border border-amber-400/30 bg-gradient-to-r from-amber-500/20 via-amber-200/10 to-transparent transition duration-300 group-hover:border-amber-300/70 group-hover:shadow-[0_0_22px_rgba(186,159,51,0.35)]" />
                   <button
                     type="button"
-                    className="relative flex w-full items-center justify-between rounded-full border border-red-400/30 bg-gradient-to-r from-black/80 via-black/70 to-black/60 px-4 py-2 text-xs uppercase tracking-[0.28em] text-red-50 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-red-300/70 hover:shadow-[0_16px_40px_rgba(0,0,0,0.55)] focus:-translate-y-1 focus:border-red-300/90 focus:outline-none focus:ring-2 focus:ring-red-300/40"
+                    className="relative flex w-full items-center justify-between rounded-full border border-amber-400/30 bg-gradient-to-r from-black/80 via-black/70 to-black/60 px-4 py-2 text-xs uppercase tracking-[0.28em] text-amber-50 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-amber-300/70 hover:shadow-[0_16px_40px_rgba(0,0,0,0.55)] focus:-translate-y-1 focus:border-amber-300/90 focus:outline-none focus:ring-2 focus:ring-amber-300/40"
                     onClick={() => setIsSortOpen((value) => !value)}
                     aria-haspopup="listbox"
                     aria-expanded={isSortOpen}
@@ -1100,8 +1100,8 @@ export default function Home() {
                         ?.label ?? "Sort"}
                     </span>
                     <span
-                      className={`ml-3 text-red-200/70 transition duration-300 ${
-                        isSortOpen ? "-rotate-180 text-red-100" : ""
+                      className={`ml-3 text-amber-200/70 transition duration-300 ${
+                        isSortOpen ? "-rotate-180 text-amber-100" : ""
                       }`}
                     >
                       <svg
@@ -1123,7 +1123,7 @@ export default function Home() {
                   </button>
                   {isSortOpen ? (
                     <div
-                      className="absolute left-0 right-0 top-full z-10 mt-3 overflow-hidden rounded-2xl border border-red-400/30 bg-black/90 shadow-[0_24px_60px_rgba(0,0,0,0.6)] backdrop-blur"
+                      className="absolute left-0 right-0 top-full z-10 mt-3 overflow-hidden rounded-2xl border border-amber-400/30 bg-black/90 shadow-[0_24px_60px_rgba(0,0,0,0.6)] backdrop-blur"
                       role="listbox"
                     >
                       {sortOptions.map((option) => {
@@ -1134,7 +1134,7 @@ export default function Home() {
                             type="button"
                             className={`flex w-full cursor-pointer items-center justify-between px-4 py-3 text-left text-xs uppercase tracking-[0.25em] transition ${
                               isActive
-                                ? "bg-red-500/15 text-red-100"
+                                ? "bg-amber-500/15 text-amber-100"
                                 : "text-white/70 hover:bg-white/5 hover:text-white"
                             }`}
                             onClick={() => {
@@ -1146,7 +1146,7 @@ export default function Home() {
                           >
                             <span>{option.label}</span>
                             {isActive ? (
-                              <span className="text-[0.6rem] uppercase tracking-[0.3em] text-red-200/80">
+                              <span className="text-[0.6rem] uppercase tracking-[0.3em] text-amber-200/80">
                                 Active
                               </span>
                             ) : null}
@@ -1162,10 +1162,10 @@ export default function Home() {
 
           <div className="grid gap-4">
             {vaultsError ? (
-              <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-red-500/40 bg-red-500/10 px-4 py-3 text-sm text-red-100">
+              <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-amber-500/40 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">
                 <span>{vaultsError}</span>
                 <button
-                  className="cursor-pointer rounded-full border border-red-200/40 px-3 py-1 text-xs text-red-100 transition hover:border-red-100 hover:text-white"
+                  className="cursor-pointer rounded-full border border-amber-200/40 px-3 py-1 text-xs text-amber-100 transition hover:border-amber-100 hover:text-white"
                   onClick={loadVaults}
                 >
                   Retry
@@ -1188,7 +1188,7 @@ export default function Home() {
                       <h3 className="font-[var(--font-heading)] text-2xl">
                         {vault.name}
                       </h3>
-                      <span className="rounded-full border border-red-400/30 bg-red-500/10 px-3 py-1 text-xs text-red-100">
+                      <span className="rounded-full border border-amber-400/30 bg-amber-500/10 px-3 py-1 text-xs text-amber-100">
                         {vault.status}
                       </span>
                     </div>
@@ -1236,16 +1236,16 @@ export default function Home() {
                         <button
                           type="button"
                           title="Copy referral link"
-                          className="group inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] text-white/80 transition hover:-translate-y-0.5 hover:border-red-300/70 hover:bg-red-500/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70 active:translate-y-0 active:scale-[0.98]"
+                          className="group inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] text-white/80 transition hover:-translate-y-0.5 hover:border-amber-300/70 hover:bg-amber-500/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70 active:translate-y-0 active:scale-[0.98]"
                           onClick={() => handleCopyVaultLink(vault.id)}
                         >
-                          <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20 text-[0.55rem] text-white/70 transition group-hover:border-red-200/70 group-hover:text-white">
+                          <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20 text-[0.55rem] text-white/70 transition group-hover:border-amber-200/70 group-hover:text-white">
                             ↗
                           </span>
                           Copy Link
                         </button>
                         <button
-                          className="cursor-pointer rounded-full bg-red-500 px-5 py-2 text-sm font-semibold text-white shadow-[0_0_25px_rgba(225,29,72,0.35)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_35px_rgba(225,29,72,0.55)] active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                          className="cursor-pointer rounded-full bg-amber-500 px-5 py-2 text-sm font-semibold text-white shadow-[0_0_25px_rgba(186,159,51,0.35)] transition hover:-translate-y-0.5 hover:bg-amber-400 hover:shadow-[0_0_35px_rgba(186,159,51,0.55)] active:translate-y-0 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
                           onClick={() => setCrackVault(vault)}
                         >
                           Crack
@@ -1259,10 +1259,10 @@ export default function Home() {
                         <button
                           type="button"
                           title="Copy referral link"
-                          className="group inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] text-white/80 transition hover:-translate-y-0.5 hover:border-red-300/70 hover:bg-red-500/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70 active:translate-y-0 active:scale-[0.98]"
+                          className="group inline-flex cursor-pointer items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[0.65rem] uppercase tracking-[0.25em] text-white/80 transition hover:-translate-y-0.5 hover:border-amber-300/70 hover:bg-amber-500/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70 active:translate-y-0 active:scale-[0.98]"
                           onClick={() => handleCopyVaultLink(vault.id)}
                         >
-                          <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20 text-[0.55rem] text-white/70 transition group-hover:border-red-200/70 group-hover:text-white">
+                          <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-white/20 text-[0.55rem] text-white/70 transition group-hover:border-amber-200/70 group-hover:text-white">
                             ↗
                           </span>
                           Copy Link
@@ -1278,7 +1278,7 @@ export default function Home() {
                   </div>
                   <div className="mt-2 h-2 w-full rounded-full bg-white/10">
                     <div
-                      className="h-2 rounded-full bg-gradient-to-r from-red-500 via-red-400 to-amber-300"
+                      className="h-2 rounded-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-300"
                       style={{ width: `${vault.progress}%` }}
                     />
                   </div>
@@ -1347,7 +1347,7 @@ export default function Home() {
           onClick={() => setAccountsOpen(false)}
         >
           <div
-            className="relative w-full max-w-md rounded-3xl border border-red-500/30 bg-gradient-to-br from-[#16070f] via-[#12090f] to-[#0c0b10] p-6 text-white shadow-[0_30px_120px_rgba(0,0,0,0.6)] fade-in-up-delay"
+            className="relative w-full max-w-md rounded-3xl border border-amber-500/30 bg-gradient-to-br from-[#120f06] via-[#100e07] to-[#0a0906] p-6 text-white shadow-[0_30px_120px_rgba(0,0,0,0.6)] fade-in-up-delay"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -1357,7 +1357,7 @@ export default function Home() {
               Close
             </button>
             <div className="mb-4 space-y-2">
-              <p className="text-xs uppercase tracking-[0.3em] text-red-300/60">
+              <p className="text-xs uppercase tracking-[0.3em] text-amber-300/60">
                 Connected Accounts
               </p>
               <h2 className="font-[var(--font-heading)] text-2xl text-white">
@@ -1414,7 +1414,7 @@ export default function Home() {
                       key={account}
                       className={`flex w-full items-center justify-between rounded-2xl border px-4 py-3 text-left text-sm transition ${
                         isActive
-                          ? "border-red-400/50 bg-red-500/10 text-white"
+                          ? "border-amber-400/50 bg-amber-500/10 text-white"
                           : "border-white/10 bg-white/5 text-white/80 hover:border-white/20 hover:bg-white/10"
                       }`}
                       onClick={() => handleSelectAccount(account)}
@@ -1423,7 +1423,7 @@ export default function Home() {
                         {account.slice(0, 8)}...{account.slice(-6)}
                       </span>
                       {isActive ? (
-                        <span className="rounded-full border border-red-400/40 px-2 py-0.5 text-[0.65rem] uppercase tracking-[0.2em] text-red-200">
+                        <span className="rounded-full border border-amber-400/40 px-2 py-0.5 text-[0.65rem] uppercase tracking-[0.2em] text-amber-200">
                           {connectedAccounts.length ? "Active" : "Current"}
                         </span>
                       ) : (
@@ -1454,7 +1454,7 @@ export default function Home() {
           onClick={() => setWelcomeOpen(false)}
         >
           <div
-            className="relative w-full max-w-lg rounded-3xl border border-red-500/30 bg-gradient-to-br from-[#16070f] via-[#12090f] to-[#0c0b10] p-6 text-white shadow-[0_30px_120px_rgba(0,0,0,0.6)] fade-in-up-delay"
+            className="relative w-full max-w-lg rounded-3xl border border-amber-500/30 bg-gradient-to-br from-[#120f06] via-[#100e07] to-[#0a0906] p-6 text-white shadow-[0_30px_120px_rgba(0,0,0,0.6)] fade-in-up-delay"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -1464,7 +1464,7 @@ export default function Home() {
               Close
             </button>
             <div className="space-y-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-red-300/60">
+              <p className="text-xs uppercase tracking-[0.3em] text-amber-300/60">
                 Welcome Bonus
               </p>
               <h2 className="font-[var(--font-heading)] text-2xl">
@@ -1475,7 +1475,7 @@ export default function Home() {
                 wallet, so make it count.
               </p>
               <button
-                className="mt-2 w-full cursor-pointer rounded-2xl bg-red-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_45px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                className="mt-2 w-full cursor-pointer rounded-2xl bg-amber-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(186,159,51,0.45)] transition hover:-translate-y-0.5 hover:bg-amber-400 hover:shadow-[0_0_45px_rgba(186,159,51,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
                 onClick={() => setWelcomeOpen(false)}
               >
                 Play
@@ -1491,7 +1491,7 @@ export default function Home() {
           onClick={() => setCreateOpen(false)}
         >
           <div
-            className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl border border-red-500/30 bg-gradient-to-br from-[#1a0c15] via-[#12090f] to-[#0c0b10] p-6 shadow-[0_30px_120px_rgba(0,0,0,0.6)] fade-in-up-delay"
+            className="relative w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-500/30 bg-gradient-to-br from-[#131006] via-[#100e07] to-[#0a0906] p-6 shadow-[0_30px_120px_rgba(0,0,0,0.6)] fade-in-up-delay"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -1501,7 +1501,7 @@ export default function Home() {
               Close
             </button>
             <div className="mb-5 space-y-2">
-              <p className="text-xs uppercase tracking-[0.3em] text-red-300/60">
+              <p className="text-xs uppercase tracking-[0.3em] text-amber-300/60">
                 Create Vault
               </p>
               <h2 className="font-[var(--font-heading)] text-2xl text-white">
@@ -1527,7 +1527,7 @@ export default function Home() {
                   </span>
                 </label>
                   <input
-                    className="h-11 rounded-2xl border border-white/10 bg-black/50 px-4 text-sm text-white placeholder:text-white/30 transition focus:border-red-400/60 focus:outline-none focus:ring-2 focus:ring-red-300/40"
+                    className="h-11 rounded-2xl border border-white/10 bg-black/50 px-4 text-sm text-white placeholder:text-white/30 transition focus:border-amber-400/60 focus:outline-none focus:ring-2 focus:ring-amber-300/40"
                     placeholder="Midnight Mirage"
                     value={vaultName}
                     onChange={(event) => setVaultName(event.target.value)}
@@ -1548,7 +1548,7 @@ export default function Home() {
                     </span>
                   </label>
                   <input
-                    className="h-11 rounded-2xl border border-white/10 bg-black/50 px-4 text-sm text-white placeholder:text-white/30 transition focus:border-red-400/60 focus:outline-none focus:ring-2 focus:ring-red-300/40"
+                    className="h-11 rounded-2xl border border-white/10 bg-black/50 px-4 text-sm text-white placeholder:text-white/30 transition focus:border-amber-400/60 focus:outline-none focus:ring-2 focus:ring-amber-300/40"
                     placeholder="$12.5"
                     value={rewardAmount}
                     onChange={(event) => setRewardAmount(event.target.value)}
@@ -1568,7 +1568,7 @@ export default function Home() {
                     </span>
                   </label>
                   <input
-                    className="h-11 rounded-2xl border border-white/10 bg-black/50 px-4 text-sm text-white placeholder:text-white/30 transition focus:border-red-400/60 focus:outline-none focus:ring-2 focus:ring-red-300/40"
+                    className="h-11 rounded-2xl border border-white/10 bg-black/50 px-4 text-sm text-white placeholder:text-white/30 transition focus:border-amber-400/60 focus:outline-none focus:ring-2 focus:ring-amber-300/40"
                     placeholder="$0.01"
                     value={trialFee}
                     onChange={(event) => setTrialFee(event.target.value)}
@@ -1598,19 +1598,19 @@ export default function Home() {
                     }
                   }}
                 >
-                  <div className="pointer-events-none absolute -inset-1 rounded-2xl bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.35),transparent_60%)] opacity-0 blur-md transition duration-300 group-hover:opacity-100" />
-                  <div className="pointer-events-none absolute inset-0 rounded-2xl border border-red-400/30 bg-gradient-to-br from-red-500/20 via-transparent to-amber-200/10 transition duration-300 group-hover:border-red-300/70 group-hover:shadow-[0_0_22px_rgba(225,29,72,0.35)]" />
+                  <div className="pointer-events-none absolute -inset-1 rounded-2xl bg-[radial-gradient(circle_at_top,rgba(186,159,51,0.35),transparent_60%)] opacity-0 blur-md transition duration-300 group-hover:opacity-100" />
+                  <div className="pointer-events-none absolute inset-0 rounded-2xl border border-amber-400/30 bg-gradient-to-br from-amber-500/20 via-transparent to-amber-200/10 transition duration-300 group-hover:border-amber-300/70 group-hover:shadow-[0_0_22px_rgba(186,159,51,0.35)]" />
                   <button
                     type="button"
-                    className="relative flex h-11 w-full items-center justify-between rounded-2xl border border-red-400/30 bg-gradient-to-r from-black/80 via-black/70 to-black/60 px-4 text-sm text-red-50 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-red-300/70 hover:shadow-[0_16px_40px_rgba(0,0,0,0.55)] focus:-translate-y-1 focus:border-red-300/90 focus:outline-none focus:ring-2 focus:ring-red-300/40"
+                    className="relative flex h-11 w-full items-center justify-between rounded-2xl border border-amber-400/30 bg-gradient-to-r from-black/80 via-black/70 to-black/60 px-4 text-sm text-amber-50 transition-all duration-300 ease-out hover:-translate-y-1 hover:border-amber-300/70 hover:shadow-[0_16px_40px_rgba(0,0,0,0.55)] focus:-translate-y-1 focus:border-amber-300/90 focus:outline-none focus:ring-2 focus:ring-amber-300/40"
                     onClick={() => setIsKeyLengthOpen((value) => !value)}
                     aria-haspopup="listbox"
                     aria-expanded={isKeyLengthOpen}
                   >
                     <span>{keyLength} characters</span>
                     <span
-                      className={`ml-3 text-red-200/70 transition duration-300 ${
-                        isKeyLengthOpen ? "-rotate-180 text-red-100" : ""
+                      className={`ml-3 text-amber-200/70 transition duration-300 ${
+                        isKeyLengthOpen ? "-rotate-180 text-amber-100" : ""
                       }`}
                     >
                       <svg
@@ -1632,7 +1632,7 @@ export default function Home() {
                   </button>
                   {isKeyLengthOpen ? (
                     <div
-                      className="absolute left-0 right-0 top-full z-10 mt-3 max-h-64 overflow-auto rounded-2xl border border-red-400/30 bg-black/90 shadow-[0_24px_60px_rgba(0,0,0,0.6)] backdrop-blur"
+                      className="absolute left-0 right-0 top-full z-10 mt-3 max-h-64 overflow-auto rounded-2xl border border-amber-400/30 bg-black/90 shadow-[0_24px_60px_rgba(0,0,0,0.6)] backdrop-blur"
                       role="listbox"
                     >
                       {Array.from({ length: 13 }, (_, index) => index + 4).map(
@@ -1644,7 +1644,7 @@ export default function Home() {
                               type="button"
                               className={`flex w-full cursor-pointer items-center justify-between px-4 py-3 text-left text-xs uppercase tracking-[0.25em] transition ${
                                 isActive
-                                  ? "bg-red-500/15 text-red-100"
+                                  ? "bg-amber-500/15 text-amber-100"
                                   : "text-white/70 hover:bg-white/5 hover:text-white"
                               }`}
                               onClick={() => {
@@ -1656,7 +1656,7 @@ export default function Home() {
                             >
                               <span>{value} characters</span>
                               {isActive ? (
-                                <span className="text-[0.6rem] uppercase tracking-[0.3em] text-red-200/80">
+                                <span className="text-[0.6rem] uppercase tracking-[0.3em] text-amber-200/80">
                                   Active
                                 </span>
                               ) : null}
@@ -1687,7 +1687,7 @@ export default function Home() {
                       Days
                     </span>
                     <input
-                      className="h-11 rounded-2xl border border-white/10 bg-black/50 px-3 text-sm text-white placeholder:text-white/30 transition focus:border-red-400/60 focus:outline-none focus:ring-2 focus:ring-red-300/40"
+                      className="h-11 rounded-2xl border border-white/10 bg-black/50 px-3 text-sm text-white placeholder:text-white/30 transition focus:border-amber-400/60 focus:outline-none focus:ring-2 focus:ring-amber-300/40"
                       placeholder="0"
                       value={lockDays}
                       onChange={(event) => setLockDays(event.target.value)}
@@ -1698,7 +1698,7 @@ export default function Home() {
                       Hours
                     </span>
                     <input
-                      className="h-11 rounded-2xl border border-white/10 bg-black/50 px-3 text-sm text-white placeholder:text-white/30 transition focus:border-red-400/60 focus:outline-none focus:ring-2 focus:ring-red-300/40"
+                      className="h-11 rounded-2xl border border-white/10 bg-black/50 px-3 text-sm text-white placeholder:text-white/30 transition focus:border-amber-400/60 focus:outline-none focus:ring-2 focus:ring-amber-300/40"
                       placeholder="12"
                       value={lockHours}
                       onChange={(event) => setLockHours(event.target.value)}
@@ -1709,7 +1709,7 @@ export default function Home() {
                       Mins
                     </span>
                     <input
-                      className="h-11 rounded-2xl border border-white/10 bg-black/50 px-3 text-sm text-white placeholder:text-white/30 transition focus:border-red-400/60 focus:outline-none focus:ring-2 focus:ring-red-300/40"
+                      className="h-11 rounded-2xl border border-white/10 bg-black/50 px-3 text-sm text-white placeholder:text-white/30 transition focus:border-amber-400/60 focus:outline-none focus:ring-2 focus:ring-amber-300/40"
                       placeholder="00"
                       value={lockMins}
                       onChange={(event) => setLockMins(event.target.value)}
@@ -1720,7 +1720,7 @@ export default function Home() {
                       Secs
                     </span>
                     <input
-                      className="h-11 rounded-2xl border border-white/10 bg-black/50 px-3 text-sm text-white placeholder:text-white/30 transition focus:border-red-400/60 focus:outline-none focus:ring-2 focus:ring-red-300/40"
+                      className="h-11 rounded-2xl border border-white/10 bg-black/50 px-3 text-sm text-white placeholder:text-white/30 transition focus:border-amber-400/60 focus:outline-none focus:ring-2 focus:ring-amber-300/40"
                       placeholder="00"
                       value={lockSecs}
                       onChange={(event) => setLockSecs(event.target.value)}
@@ -1730,14 +1730,14 @@ export default function Home() {
               </div>
               {!walletAddress || !isWalletVerified ? (
                 <button
-                  className="mt-1 cursor-pointer rounded-2xl bg-red-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_45px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                  className="mt-1 cursor-pointer rounded-2xl bg-amber-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(186,159,51,0.45)] transition hover:-translate-y-0.5 hover:bg-amber-400 hover:shadow-[0_0_45px_rgba(186,159,51,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
                   onClick={connectWallet}
                 >
                   Connect Wallet
                 </button>
               ) : (
                 <button
-                  className="mt-1 cursor-pointer rounded-2xl bg-red-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_45px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                  className="mt-1 cursor-pointer rounded-2xl bg-amber-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(186,159,51,0.45)] transition hover:-translate-y-0.5 hover:bg-amber-400 hover:shadow-[0_0_45px_rgba(186,159,51,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
                   onClick={handleCreateVault}
                 >
                   {isDemo ? "Create Demo Vault" : "Create Vault"}
@@ -1754,7 +1754,7 @@ export default function Home() {
           onClick={() => setCrackVault(null)}
         >
           <div
-            className="relative w-full max-w-2xl rounded-3xl border border-red-500/30 bg-gradient-to-br from-[#12060d] via-[#12090f] to-[#0c0b10] p-6 shadow-[0_30px_120px_rgba(0,0,0,0.6)] fade-in-up-delay"
+            className="relative w-full max-w-2xl rounded-3xl border border-amber-500/30 bg-gradient-to-br from-[#100e05] via-[#100e07] to-[#0a0906] p-6 shadow-[0_30px_120px_rgba(0,0,0,0.6)] fade-in-up-delay"
             onClick={(event) => event.stopPropagation()}
           >
             <button
@@ -1764,7 +1764,7 @@ export default function Home() {
               Close
             </button>
             <div className="mb-6">
-              <p className="text-xs uppercase tracking-[0.3em] text-red-300/60">
+              <p className="text-xs uppercase tracking-[0.3em] text-amber-300/60">
                 Crack Vault
               </p>
               <h2 className="font-[var(--font-heading)] text-2xl text-white">
@@ -1835,7 +1835,7 @@ export default function Home() {
                                 : isLocked
                                 ? "cursor-not-allowed border-white/10 bg-black/30 text-white/30"
                                 : isActive
-                                ? "border-red-400 bg-red-500/15 text-white shadow-[0_0_18px_rgba(225,29,72,0.35)]"
+                                ? "border-amber-400 bg-amber-500/15 text-white shadow-[0_0_18px_rgba(186,159,51,0.35)]"
                                 : "border-white/10 bg-black/40 text-white/80 hover:border-white/30"
                             }`}
                             maxLength={1}
@@ -1881,7 +1881,7 @@ export default function Home() {
                     guessFeedback.tone === "success"
                       ? "border-emerald-400/40 bg-emerald-500/10 text-emerald-100"
                       : guessFeedback.tone === "error"
-                      ? "border-red-400/40 bg-red-500/10 text-red-100"
+                      ? "border-amber-400/40 bg-amber-500/10 text-amber-100"
                       : "border-white/10 bg-white/5 text-white/70"
                   }`}
                 >
@@ -1891,14 +1891,14 @@ export default function Home() {
               {!isCrackClosed ? (
                 !walletAddress || !isWalletVerified ? (
                   <button
-                    className="mt-1 cursor-pointer rounded-2xl bg-red-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_45px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70"
+                    className="mt-1 cursor-pointer rounded-2xl bg-amber-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(186,159,51,0.45)] transition hover:-translate-y-0.5 hover:bg-amber-400 hover:shadow-[0_0_45px_rgba(186,159,51,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70"
                     onClick={connectWallet}
                   >
                     Connect Wallet
                   </button>
                 ) : (
                   <button
-                    className="mt-1 cursor-pointer rounded-2xl bg-red-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(225,29,72,0.45)] transition hover:-translate-y-0.5 hover:bg-red-400 hover:shadow-[0_0_45px_rgba(225,29,72,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-300/70 disabled:cursor-not-allowed disabled:opacity-60"
+                    className="mt-1 cursor-pointer rounded-2xl bg-amber-500 py-3 text-sm font-semibold text-white shadow-[0_0_35px_rgba(186,159,51,0.45)] transition hover:-translate-y-0.5 hover:bg-amber-400 hover:shadow-[0_0_45px_rgba(186,159,51,0.6)] active:translate-y-0 active:scale-[0.99] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-300/70 disabled:cursor-not-allowed disabled:opacity-60"
                     onClick={handleSubmitGuess}
                     disabled={isGuessLoading}
                   >
