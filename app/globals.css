@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #070609;
-  --foreground: #f8f3f5;
-  --accent: #e11d48;
-  --accent-dark: #b0112f;
-  --surface: #0f0b12;
-  --surface-2: #17101c;
-  --muted: #b8a7b3;
-  --gold: #e4b256;
+  --background: #070603;
+  --foreground: #f5f0e8;
+  --accent: #ba9f33;
+  --accent-dark: #988430;
+  --surface: #0d0b06;
+  --surface-2: #140f06;
+  --muted: #b8aa8a;
+  --gold: #ba9f33;
   --font-heading: "Iowan Old Style", "Palatino", "Garamond", "Times New Roman",
     serif;
   --font-body: "Avenir Next", "Segoe UI", "Helvetica Neue", "Helvetica",
@@ -33,7 +33,7 @@ body {
 }
 
 ::selection {
-  background: rgba(225, 29, 72, 0.25);
+  background: rgba(186, 159, 51, 0.25);
 }
 
 html {

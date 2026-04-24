@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function HowItWorks() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-black text-white">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(225,29,72,0.25),transparent_55%)] ambient-float" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(186,159,51,0.25),transparent_55%)] ambient-float" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_60%,rgba(228,178,86,0.08),transparent_45%)] ambient-float-slow" />
       <div className="pointer-events-none absolute inset-0 opacity-60 [background-image:linear-gradient(120deg,rgba(255,255,255,0.06)_0%,transparent_30%,rgba(255,255,255,0.04)_70%,transparent_100%)] ambient-pulse" />
 
@@ -16,7 +16,7 @@ export default function HowItWorks() {
             <span className="text-sm">←</span>
             Back
           </Link>
-          <p className="text-xs uppercase tracking-[0.3em] text-red-300/70">
+          <p className="text-xs uppercase tracking-[0.3em] text-amber-300/70">
             How It Works
           </p>
           <nav className="grid gap-2 text-sm text-white/70">
